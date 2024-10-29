@@ -7,12 +7,16 @@ total de productos ingresados.
 
 TIPS: Vas a nececitar un contardor -----> Tené presente las estructuras condicionales
 """
+#contador
+producto = ""
+contador = 0
 
-contador = 0;
-
+#bucle while
 while producto != "salir":
-    producto = input("Ingrese el nombre del producto deseado: ")
-    print(f"El producto que añadio es: {producto}")
-
-
-
+    producto = input("Bienvenido! \n Ingrese el producto deseado o escriba 'salir: ").lower()
+    if producto != "salir":
+        cantidad = int(input("Ingrese la cantidad en stock: "))
+        contador = contador + 1
+        print("########-- ALTA DE PRODUCTOS --########")
+    else:
+        print(f"Gracias por utilizar el programa. Registró {contador} producto(s)")

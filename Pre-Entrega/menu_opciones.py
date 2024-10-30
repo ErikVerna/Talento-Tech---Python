@@ -40,24 +40,29 @@ while True:
         if len(inventario) > 0:
             print("########-- LISTA DE PRODUCTOS --########")
             for producto in inventario:
-                print(f"Producto: {producto[0]}")
-                print(f"Cantidad: {producto[1]}")
-                print("---------------------------")
+                print(f"Producto: {producto[0]} | Cantidad: {producto[1]}")
+                print("--------------------------------------------------")
         else:
             print("##### NO HAY PRODUCTOS REGISTRADOS PARA MOSTRAR #####")
             
 #Modificar la cantidad de Stock -------- PENDIENTE
     elif usuario_input == 3:
         print(f"Usted ha seleccionado la opcion: {usuario_input}")
+        print(f"OPCION EN PROGRESO...")
 
 #Dar de baja un producto -------- PENDIENTE 
     elif usuario_input == 4:
         print(f"Usted ha seleccionado la opcion: {usuario_input}")
+        print(f"OPCION EN PROGRESO...")
 
 #Listado completo de productos -------- PENDIENTE
     elif usuario_input == 5:
         print(f"Usted ha seleccionado la opcion: {usuario_input}")
+        print(f"OPCION EN PROGRESO...")
 
 #Lista de producto con cantidad baja -------- PENDIENTE
     elif usuario_input == 6:
         print(f"Usted ha seleccionado la opcion: {usuario_input}")
+        print(f"OPCION EN PROGRESO...")
+    else:
+        print("OPCION NO EXISTENTE ❌")

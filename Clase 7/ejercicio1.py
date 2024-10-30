@@ -15,5 +15,5 @@ while condicion:
         condicion = False
     else:
         productos.append(producto)
-   
+
 print(productos)

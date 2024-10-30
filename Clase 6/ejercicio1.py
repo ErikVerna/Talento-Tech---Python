@@ -16,7 +16,7 @@ while producto != "salir":
     producto = input("Bienvenido! \n Ingrese el producto deseado o escriba 'salir: ").lower()
     if producto != "salir":
         cantidad = int(input("Ingrese la cantidad en stock: "))
-        contador = contador + 1
+        contador += 1
         print("########-- ALTA DE PRODUCTOS --########")
     else:
         print(f"Gracias por utilizar el programa. Registró {contador} producto(s)")

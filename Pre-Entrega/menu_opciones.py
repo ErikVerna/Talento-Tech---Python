@@ -25,7 +25,7 @@ while True:
 
 #Alta de productos
     elif usuario_input == 1:
-        print(f"Usted ha seleccionado la opcion: {usuario_input} \n ## ALTA DE PRODUCTOS ##")
+        print(f"Usted ha seleccionado la opcion: {usuario_input} \n \n ## ALTA DE PRODUCTOS ##")
         alta_producto = input("Ingrese el producto: ").lower()
         cantidad_stock = int(input("Ingrese la cantidad del producto: "))
         inventario.append([alta_producto, cantidad_stock])
@@ -36,12 +36,12 @@ while True:
 
 #Consulta de datos de productos
     elif usuario_input == 2:
-        print(f"Usted ha seleccionado la opcion: {usuario_input}")
+        print(f"Usted ha seleccionado la opcion: {usuario_input} \n")
         if len(inventario) > 0:
             print("########-- LISTA DE PRODUCTOS --########")
             for producto in inventario:
                 print(f"Producto: {producto[0]} | Cantidad: {producto[1]}")
-                print("--------------------------------------------------")
+                print("-------------------------------------------------- \n")
         else:
             print("##### NO HAY PRODUCTOS REGISTRADOS PARA MOSTRAR #####")
             

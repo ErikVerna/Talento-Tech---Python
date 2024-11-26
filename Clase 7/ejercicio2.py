@@ -5,8 +5,8 @@ Tu programa debe permitir al usuario consultar el inventario de una tienda para 
 Si el producto esta en la lista, el programa debe informarlo, sino, debe mostrar un mensaje indicando que no esta disponible.
 
 TIPS: Usa una lista para almacenar los productos en stock.
-      Permiti que el usuario ingrese el nombre de un producto a consultar.
-      Recorre la lista con un bucle while para verificar si el producto esta en stock.
+Permiti que el usuario ingrese el nombre de un producto a consultar.
+Recorre la lista con un bucle while para verificar si el producto esta en stock.
 """
 
 lista_productos = ["yerba mate", "te", "manzana"]

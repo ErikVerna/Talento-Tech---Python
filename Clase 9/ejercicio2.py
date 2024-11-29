@@ -11,3 +11,11 @@ Producto 4: #P004
 
 TIPS: Utilizá un bucle for y range() para recorrer los códigos e imprimirlos.
 """
+
+productos = []
+for i in range(4):
+    producto = input(f"Ingrese el codigo del producto: ").upper()
+    productos.append([i ,producto])
+    
+for prod in productos:
+    print(f"Producto {prod[0] + 1}: #{prod[1]}")

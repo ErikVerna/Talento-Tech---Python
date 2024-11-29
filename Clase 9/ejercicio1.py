@@ -6,3 +6,10 @@ La función debe recibir un numero entero n y devolver la suma de los numeros na
 
 TIPS: ¡Usa range()!
 """
+
+numero = int(input("Ingrese un numero en representación de 'n': "))
+suma = 0
+
+for num in range(numero):
+    suma = suma + (num + 1) 
+print(f"La suma total es de: {suma}")

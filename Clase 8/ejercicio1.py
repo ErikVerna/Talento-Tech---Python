@@ -6,3 +6,6 @@ Escribi un programa que permita:
 - Ingresar la cantidad vendida (que debe ser mayor que cero).
 - Actualizar la cantidad en stock de ese producto restando la cantidad vendida.
 """
+
+inventario = []
+

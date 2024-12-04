@@ -10,8 +10,8 @@ productos = {}
 
 for i in range(3):
     nombre_producto = input("Ingrese el nombre del producto: ").lower()
-    valor = float(input("Ingrese el precio del producto: "))
+    valor = float(input("Ingrese el precio del producto: $"))
     productos[nombre_producto] = valor
 
-for nombre_producto, valor in productos.items():
-    print(f"El producto {nombre_producto} tiene un precio de: ${valor}")
+for prod, precio in productos.items():
+    print(f"El producto {prod} tiene un precio de: ${precio}")

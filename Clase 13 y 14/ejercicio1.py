@@ -11,8 +11,6 @@ en la tabla Personas.
 
 import sqlite3
 
-
-
 conexion = sqlite3.connect("base-de-datos.db")
 cursor = conexion.cursor()
 

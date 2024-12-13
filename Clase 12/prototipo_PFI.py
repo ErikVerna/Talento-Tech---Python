@@ -60,10 +60,50 @@ def mostrar_productos():
     else:
         print("##### NO HAY PRODUCTOS REGISTRADOS PARA MOSTRAR #####")
 
-
-
-mostrar_productos()
-
+def actualizar_producto():
+    print("Los productos en el inventario son: ")
+    mostrar_productos()
+    codigo = 0
+    while codigo <= 0:
+        try:
+            codigo = int(input("Ingrese el codigo del producto a modificar: "))
+            if codigo <= 0:
+                print("Ingrese un numero mayor a 0!")
+        except ValueError:
+            print("Ingrese un numero")
+            codigo = 0
+    resultado = inventario.get(1, "No encontrado")
+    if resultado == "No encontrado":
+        print("Codigo incorrecto, ningun producto con ese codigo.")
+    else:
+        print(f"{codigo:<10} | {resultado["Nombre"]:<20} | {resultado["Descripcion"]:<20} | {resultado["Categoria"]:<20} | {resultado["Cantidad"]:<20} | {resultado["Precio"]:<20}")
+        nombre = input("Ingrese el nombre del producto: ").capitalize()
+        descripcion = input("Ingrese la nueva descripcion del producto: ").capitalize()
+        categoria = input("Ingrese la nueva categoria del producto: ").capitalize()
+        cantidad = 0
+        precio = 0.0
+        while cantidad <= 0:
+            try:
+                cantidad = int(input("Ingrese la cantidad en stock: "))
+                if cantidad <= 0:
+                    print("Ingrese un numero mayor que 0")
+            except ValueError:
+                print("## ERROR ##  \n - Ingrese un valor numerico")
+                cantidad = 0
+        while precio <= 0:
+            try:
+                precio = float(input("Ingrese el precio del producto: "))
+                if precio <= 0:
+                    print("Ingrese un numero mayor que 0")
+            except ValueError:
+                print("## ERROR ##  \n - Ingrese un valor numerico")
+                precio = 0
+            inventario[codigo] = {"Nombre": nombre, "Descripcion": descripcion, "Categoria": categoria, "Cantidad": cantidad, "Precio": precio}
+            print("Producto agregado exitosamente.")
+            mostrar_productos()
+            
+            
+actualizar_producto()
 
 
 

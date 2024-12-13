@@ -29,75 +29,226 @@ def init_tabla_db():
             cantidad INTEGER NOT NULL,
             precio INTEGER NOT NULL
             )
-        '''
-    )
+        ''')      
 
 #Alta de productos
-def agregar_producto(nombre, descripcion, categoria, cantidad, precio):
-        print(f"Usted ha seleccionado la opcion:  \n \n ## ALTA DE PRODUCTOS ##")
-        producto = [nombre, descripcion, categoria, cantidad, precio]
-        conexion = sqlite3.connect("./base-datos.db")
+def agregar_producto():
+    print("Usted ha seleccionado la opción: 1 \n \n ## ALTA DE PRODUCTOS ##")
+    
+    # Solicitar datos del producto al usuario
+    nombre = input("Ingrese el nombre del producto: ").strip()
+    descripcion = input("Ingrese una descripción del producto: ").strip()
+    categoria = input("Ingrese la categoría del producto: ").strip()
+    
+    # Validar que cantidad sea un número entero no negativo
+    cantidad = -1
+    while cantidad < 0:
+        try:
+            cantidad = int(input("Ingrese la cantidad del producto: "))
+            if cantidad < 0:
+                print("DATO INVÁLIDO ❌. La cantidad debe ser mayor o igual a 0.")
+        except ValueError:
+            print("DATO INVÁLIDO ❌. Ingrese un número entero.")
+    
+    # Validar que precio sea un número entero no negativo
+    precio = -1
+    while precio < 0:
+        try:
+            precio = float(input("Ingrese el precio del producto: $"))
+            if precio < 0:
+                print("DATO INVÁLIDO ❌. El precio debe ser mayor o igual a 0.")
+        except ValueError:
+            print("DATO INVÁLIDO ❌. Ingrese un número entero.")
+    
+    # Crear la tupla del producto
+    producto = (nombre, descripcion, categoria, cantidad, precio)
+    
+    # Agregar el producto a la base de datos
+    with sqlite3.connect(DB_PATH) as conexion:
         cursor = conexion.cursor()
-        cursor.execute("INSERT INTO productos (nombre, descripcion, categoria, cantidad, precio) VALUES (?, ?, ?, ?, ?)", producto)
+        # Verificar si el nombre ya existe
+        cursor.execute("SELECT * FROM productos WHERE nombre = ?", (nombre,))
+        existente = cursor.fetchone()
+        if existente:
+            print(f"Error: Ya existe un producto con el nombre '{nombre}'.")
+            return  # Salir de la función si el producto ya existe
+        
+        # Insertar el producto si no existe
+        cursor.execute(
+            "INSERT INTO productos (nombre, descripcion, categoria, cantidad, precio) VALUES (?, ?, ?, ?, ?)", 
+            producto
+        )
         conexion.commit()
+        nuevo_id = cursor.lastrowid
         print("################### PRODUCTO AÑADIDO EXITOSAMENTE: ##############################")
-        print("########-- ALTA DE PRODUCTOS --########")
-        print(f"{id:<10} | {producto["nombre"]:<20} | {producto["descripcion"]:<20} | {producto["categoria"]:<20} | {producto["cantidad"]:<20} | {producto["precio"]:<20}")
-        conexion.close()
+        print(f"{'ID':<10} | {'Nombre':<20} | {'Descripción':<20} | {'Categoría':<20} | {'Cantidad':<10} | {'Precio ($)':<10}")
+        print(f"{nuevo_id:<10} | {nombre:<20} | {descripcion:<20} | {categoria:<20} | {cantidad:<10} | {precio:<10}")
 
-def listar_productos(productos = 0):
+#Mostrar todos los productos
+def listar_productos(productos=0):
+    print("Usted ha seleccionado la opción: 2 \n \n ## LISTA DE PRODUCTOS ##")
+    print(f"{'ID':<10} | {'Nombre':<20} | {'Descripción':<20} | {'Categoría':<20} | {'Cantidad':<10} | {'Precio ($)':<10}")
+    print("-" * 90)
     if productos == 0:
-        conexion = sqlite3.connect("./base-datos.db")
-        cursor = conexion.cursor()
-        cursor.execute("SELECT * FROM productos")
-        resultados = cursor.fetchall()
-        print(resultados)
-        for prod in resultados:
-            print(f"{"ID":<10} | {prod["nombre"]:<20} | {prod["descripcion"]:<20} | {prod["categoria"]:<20} | {prod["cantidad"]:<20} | {prod["precio"]:<20}")
-            conexion.close()
-        else:
-            for prod in productos:
-                print(f"{"ID":<10} | {prod["nombre"]:<20} | {prod["descripcion"]:<20} | {prod["categoria"]:<20} | {prod["cantidad"]:<20} | {prod["precio"]:<20}")
+        with sqlite3.connect(DB_PATH) as conexion:
+            cursor = conexion.cursor()
+            cursor.execute("SELECT * FROM productos")
+            resultados = cursor.fetchall()
+            for prod in resultados:
+                print(f"{prod[0]:<10} | {prod[1]:<20} | {prod[2]:<20} | {prod[3]:<20} | {prod[4]:<10} | {prod[5]:<10}")
+    else:
+        for prod in productos:
+            print(f"{prod[0]:<10} | {prod[1]:<20} | {prod[2]:<20} | {prod[3]:<20} | {prod[4]:<10} | {prod[5]:<10}")
 
+#Actualizar producto
+def actualizar_producto():
+    listar_productos()
+    id_producto = 0
+    while id_producto <= 0:
+        try:
+            id_producto = int(input("# Ingrese el código del producto que desea modificar: "))
+            if id_producto <= 0:
+                print("DATO INVÁLIDO ❌. Ingrese un número mayor que 0.")
+        except ValueError:
+            print("Ingrese un número válido.")
+            id_producto = 0
+
+    nombre = input("# Ingrese un nuevo nombre para el producto: ").capitalize()
+    descripcion = input("# Ingrese la nueva descripción para el producto: ").capitalize()
+    categoria = input("# Ingrese la nueva categoría para el producto: ").capitalize()
+
+    cantidad = -1
+    while cantidad < 0:
+        try:
+            cantidad = int(input("# Ingrese la nueva cantidad del producto: "))
+            if cantidad < 0:
+                print("DATO INVÁLIDO ❌. Ingrese un número mayor o igual a 0.")
+        except ValueError:
+            print("Ingrese un número válido.")
+            cantidad = -1
+
+    precio = -1
+    while precio < 0:
+        try:
+            precio = float(input("# Ingrese el nuevo precio del producto: $"))
+            if precio < 0:
+                print("DATO INVÁLIDO ❌. Ingrese un número mayor o igual a 0.")
+        except ValueError:
+            print("Ingrese un número válido.")
+            precio = -1
+
+    with sqlite3.connect(DB_PATH) as conexion:
+        cursor = conexion.cursor()
+        # Consulta UPDATE corregida
+        query = """
+            UPDATE productos 
+            SET nombre = ?, descripcion = ?, categoria = ?, cantidad = ?, precio = ? 
+            WHERE id = ?
+        """
+        cursor.execute(query, (nombre, descripcion, categoria, cantidad, precio, id_producto))
+        conexion.commit()
+        print(f"El producto con ID {id_producto} ha sido actualizado exitosamente.")
 
 def actualizar_producto():
     listar_productos()
-    id = 0
-    while id <= 0:
+    id_producto = 0
+    while id_producto <= 0:
         try:
-            id = int(input("# Ingrese el codigo del producto que desea modificar: "))
-            if id <= 0:
-                print("DATO INVALIDO ❌. Ingrese un numero mayor que 0")
+            id_producto = int(input("# Ingrese el código del producto que desea modificar: "))
+            if id_producto <= 0:
+                print("DATO INVÁLIDO ❌. Ingrese un número mayor que 0.")
         except ValueError:
-            print("Ingrese un numero: ")
-            id = 0
-    nombre = input("# Ingrese un nuevo nombre para el producto: ")
-    descripcion = input("# Ingrese la nueva descripcion para el producto: ")
-    categoria = input("# Ingrese la nueva descripcion para el producto: ")
-    cantidad = 0
+            print("Ingrese un número válido.")
+            id_producto = 0
+
+    with sqlite3.connect(DB_PATH) as conexion:
+        cursor = conexion.cursor()
+        # Verificar si el producto existe
+        cursor.execute("SELECT COUNT(*) FROM productos WHERE id = ?", (id_producto,))
+        if cursor.fetchone()[0] == 0:
+            print(f"No existe ningún producto con el ID {id_producto}.")
+            return
+
+    nombre = input("# Ingrese un nuevo nombre para el producto: ").capitalize()
+    descripcion = input("# Ingrese la nueva descripción para el producto: ").capitalize()
+    categoria = input("# Ingrese la nueva categoría para el producto: ").capitalize()
+
+    cantidad = -1
     while cantidad < 0:
         try:
-            cantidad = int(input("# Ingrese el nuevo precio del producto: "))
-            if  cantidad <= 0:
-                print("DATO INVALIDO ❌. Ingrese un numero mayor que 0")
+            cantidad = int(input("# Ingrese la nueva cantidad del producto: "))
+            if cantidad < 0:
+                print("DATO INVÁLIDO ❌. Ingrese un número mayor o igual a 0.")
         except ValueError:
-            print("Ingrese un numero: ")
-            cantidad = 0
-    precio = 0
+            print("Ingrese un número válido.")
+            cantidad = -1
+
+    precio = -1
     while precio < 0:
         try:
-            cantidad = int(input("# Ingrese el nuevo precio del producto: "))
-            if precio <= 0:
-                print("DATO INVALIDO ❌. Ingrese un numero mayor que 0")
+            precio = int(input("# Ingrese el nuevo precio del producto: $"))
+            if precio < 0:
+                print("DATO INVÁLIDO ❌. Ingrese un número mayor o igual a 0.")
         except ValueError:
-            print("Ingrese un numero: ")
-            cantidad = 0
-    conexion = sqlite3.connect("./base-datos.db")
-    cursor = conexion.cursor()
-    query = f"UPDATE FROM productos SET nombre = {nombre}, descripcion = {descripcion}, categoria = {categoria}, cantidad = {cantidad}, precio = {precio} WHERE id = {id} "
-    cursor.execute(query)
-    conexion.commit()
-    conexion.close()
-    listar_productos()
+            print("Ingrese un número válido.")
+            precio = -1
+
+    with sqlite3.connect(DB_PATH) as conexion:
+        cursor = conexion.cursor()
+        query = """
+            UPDATE productos 
+            SET nombre = ?, descripcion = ?, categoria = ?, cantidad = ?, precio = ? 
+            WHERE id = ?
+        """
+        cursor.execute(query, (nombre, descripcion, categoria, cantidad, precio, id_producto))
+        conexion.commit()
+        print(f"El producto con ID {id_producto} ha sido actualizado exitosamente.")
+
+#Baja de Producto
+def baja_producto():
+    print()
+
+#Busqueda por producto
+def busqueda_producto():
+    print()
+
+#Lista de productos con cantidad baja
+def listar_bajo_stock():
+    print()
+
+#Menu
+def menu():
+    init_tabla_db()
+    while True:
+        print("#####################################################")
+        print(":::::::::::-- Menu de Gestion de Productos --::::::::::: \n 1. Alta de productos nuevos ⬆️ ")
+        print(" 2. Listado completo de productos 📋 \n 3. Modificar un producto 🔄️")
+        print(" 4. Dar de baja un producto ⬇️ \n 5. Busqueda por producto 🔍")
+        print(" 6. Lista de productos con cantidad baja ⚠️ \n 7. Salir 🏃‍♂️")
+        print(" ======================***********==============================")
+        try:
+            opcion = int(input("Seleccione una opción (1-7): "))
+            
+            if opcion == 1:
+                agregar_producto()
+            elif opcion == 2:
+                listar_productos()
+            elif opcion == 3:
+                actualizar_producto()
+            elif opcion == 4:
+                baja_producto()
+            elif opcion == 5:
+                busqueda_producto()
+            elif opcion == 6:
+                listar_bajo_stock()  
+            elif opcion == 7:
+                print("¡Gracias por usar el sistema! Saliendo...")
+                break  # Salir del menú
+            else:
+                print("❌ Opción inválida. Por favor, seleccione un número entre 1 y 4.")
+        
+        except ValueError:
+            print("❌ Entrada no válida. Por favor, ingrese un número entre 1 y 4.")
 
 
+menu()

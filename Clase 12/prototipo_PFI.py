@@ -9,7 +9,8 @@ print("\n Bienvenido al programa de 'Logistica Hyrule' 😇, utilice nuestro men
 
 inventario = {
     1: {"Nombre": "Laptop", "Descripcion": "Dell XPS 13", "Categoria": "Electrónica", "Cantidad": 5, "Precio": 1200},
-    2: {"Nombre": "Teléfono", "Descripcion": "iPhone 13", "Categoria": "Electrónica", "Cantidad": 10, "Precio": 999}
+    2: {"Nombre": "Teléfono", "Descripcion": "iPhone 13", "Categoria": "Electrónica", "Cantidad": 10, "Precio": 999},
+    3: {"Nombre": "Teléfono", "Descripcion": "iPhone 14", "Categoria": "Electrónica", "Cantidad": 3, "Precio": 2999}
 }
 
 #Codigo autoincremental
@@ -49,16 +50,15 @@ def alta_productos():
     print("Producto agregado exitosamente!")
 
 
-def mostrar_productos():
-    if len(inventario) > 0:
-        print("########-- LISTA DE PRODUCTOS --########")
+def mostrar_productos(inventario):
+    if len(inventario) == 0:
+        print("##### NO HAY PRODUCTOS REGISTRADOS PARA MOSTRAR #####")        
+    else:
         print(f"{"Codigo":<10} | {"Nombre":<20} | {"Descripcion":<20} | {"Categoria":<20} | {"Cantidad":<20} | {"Precio":<20}")
+        print("########-- LISTA DE PRODUCTOS --########")
         print(f"{"-"*120}")
         for codigo, producto in inventario.items():
             print(f"{codigo:<10} | {producto["Nombre"]:<20} | {producto["Descripcion"]:<20} | {producto["Categoria"]:<20} | {producto["Cantidad"]:<20} | {producto["Precio"]:<20}")
-                
-    else:
-        print("##### NO HAY PRODUCTOS REGISTRADOS PARA MOSTRAR #####")
 
 def actualizar_producto():
     print("Los productos en el inventario son: ")
@@ -101,11 +101,28 @@ def actualizar_producto():
             inventario[codigo] = {"Nombre": nombre, "Descripcion": descripcion, "Categoria": categoria, "Cantidad": cantidad, "Precio": precio}
             print("Producto agregado exitosamente.")
             mostrar_productos()
-            
-            
-actualizar_producto()
 
+def reporte_bajo_stock(inventario):
+    cantidad = 0
+    while cantidad <= 0:
+        try:
+            cantidad = int(input("Ingrese la cantidad minima que puede haber: "))
+            if cantidad <= 0:
+                print("Ingrese un numero mayor que 0")
+        except ValueError:
+            print("Ingrese un numero: ")
+            cantidad = 0
+    productos_bajo_stock = {}
+    for codigo, producto in inventario.items():
+        if producto["Cantidad"] <= cantidad:
+            productos_bajo_stock[codigo] = producto
+    if len(productos_bajo_stock) == 0:
+        print("No hay productos con bajo stock.")
+    else:
+        print("Los productos con bajo stock son: ")
+        mostrar_productos(reporte_bajo_stock)
 
+reporte_bajo_stock(inventario)
 
 
 

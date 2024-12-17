@@ -120,7 +120,7 @@ def reporte_bajo_stock(inventario):
         print("No hay productos con bajo stock.")
     else:
         print("Los productos con bajo stock son: ")
-        mostrar_productos(reporte_bajo_stock)
+        mostrar_productos(productos_bajo_stock)
 
 reporte_bajo_stock(inventario)
 

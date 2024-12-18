@@ -338,5 +338,7 @@ def menu():
             elif opcion == 7:
                 print(Fore.LIGHTMAGENTA_EX + " \n ¡Gracias por usar el sistema! Saliendo... 👋")
                 break  # Salir del menú
+            else:
+                print(Fore.RED + "❌ Entrada no válida. Por favor, ingrese un número entre 1 y 7.")
         except ValueError:
-            print(Fore.RED + "❌ Entrada no válida. Por favor, ingrese un número entre 1 y 4.")
+            print(Fore.RED + "❌ Entrada no válida. Por favor, ingrese un número entre 1 y 7.")

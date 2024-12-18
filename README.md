@@ -8,7 +8,7 @@
 
 # Proyecto final integrador (PFI)
 
-# README: Sistema de Gestión de Productos "Logística Hyrule"
+# Sistema de Gestión de Productos "Logística Hyrule"
 
 ## Descripción del Proyecto
 Este programa implementa un sistema de gestión de inventarios llamado **Logística Hyrule**, desarrollado en Python. Permite realizar operaciones básicas como:

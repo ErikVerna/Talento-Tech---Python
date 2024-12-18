@@ -71,13 +71,13 @@ El sistema utiliza una base de datos SQLite almacenada en la carpeta `db` con el
 
 ## Uso del Programa
 1. Clona el repositorio o descarga los archivos del proyecto en formato zip.
-2. Asegúrate de tener las siguientes dependencias instaladas:
+2. Es importante tener las siguientes dependencias instaladas:
    ```bash
    pip install colorama
    ```
 3. Ejecuta el archivo principal del programa:
    ```bash
-   python main.py
+   py main.py
    ```
 4. Sigue las instrucciones en el menú para realizar las operaciones deseadas.
 

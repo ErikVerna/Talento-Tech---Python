@@ -339,6 +339,3 @@ def menu():
         
         except ValueError:
             print(Fore.RED + "❌ Entrada no válida. Por favor, ingrese un número entre 1 y 4.")
-
-log_inicial()
-menu()

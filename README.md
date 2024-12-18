@@ -96,5 +96,6 @@ Se puede modificar la estructura de la tabla o agregar nuevas funcionalidades ed
 - **Control de errores**: Manejo de errores comunes como entradas no válidas o intentos de registrar productos duplicados.
 
 ---
-**Autor:** Erik Tomás Verna 
+**Autor:** Erik Tomás Verna
+
 **Versión:** 1.0.0

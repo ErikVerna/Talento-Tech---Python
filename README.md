@@ -3,7 +3,7 @@
 ## Talento Tech BA
 ### Comision: 24215
 ## Profesor:  Nicolas Riquelme 
-## Alumno: Erik Verna 
+## Alumno: Erik Tomás Verna 
 
 
 # Proyecto final integrador (PFI)
@@ -75,7 +75,7 @@ El sistema utiliza una base de datos SQLite almacenada en la carpeta `db` con el
    ```bash
    pip install colorama
    ```
-3. Ejecuta el archivo principal del programa:
+3. Ejecuta el archivo principal del programa desde la carpeta raiz del proyecto, con el siguiente comando:
    ```bash
    py main.py
    ```

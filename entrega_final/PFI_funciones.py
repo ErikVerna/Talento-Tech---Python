@@ -2,7 +2,9 @@ import sqlite3
 import os
 from colorama import init,Fore,Back
 
+#Se inicia colorama en autoreset = True para evitar que se coloree todo el terminal del mismo color.
 init(autoreset=True)
+
 #Mensaje de bienvenida al programa
 def log_inicial():
     print(Fore.BLUE + "░  ░░░░░░░░      ░░░      ░░        ░░      ░░        ░        ░░      ░░░      ░░░░░░░  ░░░░  ░  ░░░░  ░       ░░  ░░░░  ░  ░░░░░░░        ░")
@@ -11,7 +13,6 @@ def log_inicial():
     print(Fore.CYAN + "█  ███████  ████  █  ████  ████  ██████████  ████  ███████  ████  ████  █        ██████  ████  ████  ████  ███  ██  ████  █  ███████  ███████")
     print(Fore.BLUE + "█        ██      ███      ██        ██      █████  ████        ██      ██  ████  ██████  ████  ████  ████  ████  ██      ██        █        █")
     print(Fore.GREEN + "\n Bienvenido al programa de 'Logistica Hyrule' 😇, utilice nuestro menú para seleccionar la opción que requiera:")
-
 
 #Ruta de acceso a la db
 DB_PATH = os.path.join("db", "inventario.db")
@@ -269,6 +270,9 @@ def busqueda_producto():
         elif opcion == 4:
             print(Fore.LIGHTCYAN_EX + "Regresando al menú principal...")
             break
+        
+        else:
+            print(Fore.RED + "❌ Opción inválida. Por favor, seleccione un número entre 1 y 4.")
 
 #Lista de productos con stock bajo (Opcion 6)
 def listar_bajo_stock():
@@ -282,7 +286,7 @@ def listar_bajo_stock():
             print(Fore.RED + "❌ Entrada inválida. Ingrese un número válido.")
             cantidad = 0
 
-    print(Fore.YELLOW + "\n## Productos con cantidad baja ##")
+    print(Fore.YELLOW + "\n##########################  Productos con cantidad baja ##############################")
     print(Fore.LIGHTMAGENTA_EX + f"{'ID':<10} | {'Nombre':<20} | {'Descripción':<20} | {'Categoría':<20} | {'Cantidad':<10} | {'Precio ($)':<10}")
     print("-" * 120)
 
@@ -334,8 +338,5 @@ def menu():
             elif opcion == 7:
                 print(Fore.LIGHTMAGENTA_EX + " \n ¡Gracias por usar el sistema! Saliendo... 👋")
                 break  # Salir del menú
-            else:
-                print(Fore.RED + "❌ Opción inválida. Por favor, seleccione un número entre 1 y 4.")
-        
         except ValueError:
             print(Fore.RED + "❌ Entrada no válida. Por favor, ingrese un número entre 1 y 4.")
